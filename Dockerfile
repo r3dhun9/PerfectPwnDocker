@@ -16,6 +16,8 @@ RUN chsh -s /bin/zsh
 
 RUN cd /root && wget https://raw.githubusercontent.com/r3dhun9/PerfectZshrc/master/.zshrc && wget https://raw.githubusercontent.com/r3dhun9/PerfectTmuxConf/master/.tmux.conf && wget https://raw.githubusercontent.com/r3dhun9/PerfectVimrc/master/.vimrc
 
+RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall
+
 RUN cd ~/.vim/bundle/YouCompleteMe && python3 install.py
 
 RUN python3 -m pip install --upgrade pip && python3 -m pip install --upgrade git+https://github.com/Gallopsled/pwntools.git@dev3
