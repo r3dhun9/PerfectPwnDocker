@@ -26,7 +26,14 @@ RUN pip install capstone && pip install ropgadget
 
 RUN gem install one_gadget seccomp-tools
 
-RUN git clone https://github.com/longld/peda.git /root/peda && echo "source ~/peda/peda.py" >> /root/.gdbinit
+RUN git clone https://github.com/longld/peda.git /root/peda && echo "source ~/peda/peda.py" >> /root/.gdbinit && echo "source ~/Pwngdb/angelheap/gdbinit.py
+
+define hook-run
+python
+import angelheap
+angelheap.init_angelheap()
+end
+end" >> /root/.gdbinit
 
 RUN git clone https://github.com/scwuaptx/Pwngdb.git
 
