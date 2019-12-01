@@ -1,12 +1,22 @@
 FROM phusion/baseimage:master-amd64
 
+MAINTAINER Redhung <redhung@hung.red>
+
 WORKDIR /root/
 
 RUN dpkg --add-architecture i386 
 
 RUN apt update
     
-RUN apt install -y libc6:i386 libc6-dbg:i386 libc6-dbg lib32stdc++6 g++-multilib cmake ipython vim net-tools iputils-ping libffi-dev libssl-dev python-dev python3-dev python3-pip python3 build-essential ruby ruby-dev tmux strace ltrace nasm wget radare2 netcat socat git gdb
+RUN apt install -y libc6:i386 libc6-dbg:i386 libc6-dbg lib32stdc++6 g++-multilib cmake ipython vim net-tools iputils-ping libffi-dev libssl-dev python-dev python3-dev python3-pip python3 build-essential ruby ruby-dev tmux strace ltrace nasm wget radare2 netcat socat git gdb zsh
+
+RUN sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+
+RUN chsh -s /bin/zsh
+
+RUN cd /root && wget https://raw.githubusercontent.com/r3dhun9/PerfectZshrc/master/.zshrc && wget https://raw.githubusercontent.com/r3dhun9/PerfectTmuxConf/master/.tmux.conf && wget https://raw.githubusercontent.com/r3dhun9/PerfectVimrc/master/.vimrc
+
+RUN cd ~/.vim/bundle/YouCompleteMe && python3 install.py
 
 RUN python3 -m pip install --upgrade pip && python3 -m pip install --upgrade git+https://github.com/Gallopsled/pwntools.git@dev3
 
