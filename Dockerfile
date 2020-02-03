@@ -14,9 +14,21 @@ RUN sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/maste
 
 RUN chsh -s /bin/zsh
 
-RUN cd /root && wget https://raw.githubusercontent.com/r3dhun9/PerfectZshrc/master/.zshrc && wget https://raw.githubusercontent.com/r3dhun9/PerfectTmuxConf/master/.tmux.conf && wget https://raw.githubusercontent.com/r3dhun9/PerfectVimrc/master/.vimrc
+RUN cd /root && wget https://raw.githubusercontent.com/r3dhun9/PerfectTmuxConf/master/.tmux.conf && wget https://raw.githubusercontent.com/r3dhun9/PerfectVimrc/master/.vimrc
 
-RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && vim +PluginInstall +qall
+RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim 
+
+RUN git clone https://github.com/tomasr/molokai.git ~/.vim/bundle/molokai
+
+RUN vim +PluginInstall +qall
+
+RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+RUN git clone https://github.com/r3dhun9/PerfectZshrc.git && mv PerfectZshrc/.zshrc ./ && rm -rf PerfectZshrc
+
+RUN source .zshrc
 
 RUN cd ~/.vim/bundle/YouCompleteMe && python3 install.py
 
@@ -26,14 +38,7 @@ RUN pip install capstone && pip install ropgadget
 
 RUN gem install one_gadget seccomp-tools
 
-RUN git clone https://github.com/longld/peda.git /root/peda && echo "source ~/peda/peda.py" >> /root/.gdbinit && echo "source ~/Pwngdb/angelheap/gdbinit.py
-
-define hook-run
-python
-import angelheap
-angelheap.init_angelheap()
-end
-end" >> /root/.gdbinit
+RUN git clone https://github.com/longld/peda.git /root/peda && echo "source ~/peda/peda.py" >> /root/.gdbinit && echo "source ~/Pwngdb/angelheap/gdbinit.py" >> /root/.gdbinit && echo "define hook-run" >> /root/.gdbinit && echo "python" >> /root/.gdbinit && echo "import angelheap" >> /root/.gdbinit && echo "angelheap.init_angelheap()" >> /root/.gdbinit && echo "end" >> /root/.gdbinit && echo "end" >> /root/.gdbinit
 
 RUN git clone https://github.com/scwuaptx/Pwngdb.git
 
